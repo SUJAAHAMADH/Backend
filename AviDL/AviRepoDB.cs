@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,20 @@ namespace AviDL
         public AviRepoDB(AviDBContext context)
         {
             _context = context;
+        }
+
+        public async Task<User> GetUserByEmail(string userEmail)
+        {
+            return await _context.Users
+                .Where(u => u.Email == userEmail)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<User> AddUserAsync(User newUser)
+        {
+            await _context.Users.AddAsync(newUser);
+            await _context.SaveChangesAsync();
+            return newUser;
         }
 
         public Contributor AddContributor(Contributor newContributor)

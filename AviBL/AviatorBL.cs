@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using AviDL;
 
 namespace AviBL
@@ -13,6 +14,23 @@ namespace AviBL
         public AviatorBL(IAviRepo repo)
         {
             _repo = repo;
+        }
+
+        public async Task<User> GetUserByEmail(string userEmail)
+        {
+            User user2Return = await _repo.GetUserByEmail(userEmail);
+
+            if (user2Return == null)
+            {
+                user2Return = new User();
+                user2Return.UserName = userEmail;
+                return await _repo.AddUserAsync(user2Return);
+            }
+            else
+            {
+                return user2Return;
+            }
+
         }
 
         public Contributor AddContributor(Contributor newContributor)

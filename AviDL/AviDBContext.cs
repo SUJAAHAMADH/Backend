@@ -19,6 +19,38 @@ namespace AviDL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>()
+                .Property(x => x.ID)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Contributor>()
+                .Property(x => x.ID)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Script>()
+                .Property(x => x.ID)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Scene>()
+                .Property(x => x.ID)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<File>()
+                .Property(x => x.ID)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<SceneFile>()
+                .Property(x => x.ID)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<SceneFile>()
+                .Property(x => x.ID)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Pilot>()
+                .Property(x => x.ID)
+                .ValueGeneratedOnAdd();
+
             modelBuilder.Entity<Pilot>()
                .HasOne(p => p.Script)
                .WithOne()

@@ -24,5 +24,6 @@ namespace AviBL
         List<Contributor> GetContributorsByUserID(int userID);
         List<Pilot> GetPilots();
         File DeleteFile(File selectedFile);
+        Task<User> GetUserByEmail(string userEmail);
     }
 }
