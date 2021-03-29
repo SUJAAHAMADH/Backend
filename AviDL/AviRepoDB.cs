@@ -36,6 +36,20 @@ namespace AviDL
             await _context.SaveChangesAsync();
             return newUser;
         }
+        public async Task<User> UpdateUserAsync(int id, User user)
+        {
+            var result = _context.Users
+                         .Where(u => u.ID == id)
+                         .FirstOrDefault();
+            result.ID = user.ID;
+            result.FirstName = user.FirstName;
+            result.LastName = user.LastName;
+            result.UserName = user.UserName;
+            result.Email = user.Email;
+            result.PhoneNumb = user.PhoneNumb;
+            await _context.SaveChangesAsync();
+            return result;
+        }
         public async Task<Contributor> GetContributorById(int userId, int pilotId)
         {
             return await _context.Contributors

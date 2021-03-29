@@ -41,6 +41,10 @@ namespace AviBL
             user.Email = userdetail.Email;
             return await _repo.AddUserAsync(user);
         }
+        public async Task<User> UpdateUser(int id,User user)
+        {
+            return await _repo.UpdateUserAsync(id,user);
+        }
         public async Task<User> GetUserById(int userId)
         {
             return await _repo.GetUserById(userId);

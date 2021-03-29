@@ -28,5 +28,6 @@ namespace AviDL
         Task<User> GetUserById(int Id);
         Task<User> AddUserAsync(User newUser);
         Task<Contributor> GetContributorById(int userId, int pilotId);
+        Task<User> UpdateUserAsync(int id,User user);
     }
 }

@@ -28,5 +28,6 @@ namespace AviBL
         Task<User> GetUserById(int Id);
         Task<Contributor> GetContributorById(int userId, int pilotId);
         Task<User> AddUser(User userdetail);
+        Task<User> UpdateUser(int id,User user);
     }
 }
