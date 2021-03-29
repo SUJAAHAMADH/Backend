@@ -18,13 +18,14 @@ namespace AviREST.APIModels
         public static PilotDetails FromDLModel(Pilot p)
         {
             if (p == null) return null;
-            return new PilotDetails { 
-                ID = p.ID, 
-                PilotName = p.PilotName, 
-                PilotDescription = p.PilotDescription, 
-                Producer = UserMinimal.FromDLModel(p.Producer), 
-                Files = p.Files.Select(f => FileDetails.FromDLModel(f)).ToList(), 
-                Scenes = p.Scenes.Select(s => SceneDetails.FromDLModel(s)).ToList()
+            return new PilotDetails {
+                ID = p.ID,
+                PilotName = p.PilotName,
+                PilotDescription = p.PilotDescription,
+                Producer = UserMinimal.FromDLModel(p.Producer),
+                Files = p.Files.Select(f => FileDetails.FromDLModel(f)).ToList(),
+                Scenes = p.Scenes.Select(s => SceneDetails.FromDLModel(s)).ToList(),
+                Script = ScriptDetails.FromDLModel(p.Script)
             };
         }
     }

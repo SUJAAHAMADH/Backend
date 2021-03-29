@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs;
+using System.IO;
 
 namespace AviREST.Controllers
 {
@@ -13,9 +15,11 @@ namespace AviREST.Controllers
     public class ScriptController : ControllerBase
     {
         private IAviBL _aviBL;
-        public ScriptController(IAviBL aviBL)
+        private BlobServiceClient _blobSC;
+        public ScriptController(IAviBL aviBL, BlobServiceClient blobSC)
         {
             _aviBL = aviBL;
+            _blobSC = blobSC;
         }
         [HttpPost]
         public CreatedID Create(ScriptCreate apiModel)
@@ -25,9 +29,20 @@ namespace AviREST.Controllers
                 sceneApiModel.PilotID = apiModel.PilotID;
                 _aviBL.AddScene(sceneApiModel.ToDLModel());
             }
-            // TODO: Upload scriptBody to Azure Blob Storage
-            apiModel.ScriptURL = "https://www.google.com/";
+            BlobContainerClient containerClient = _blobSC.CreateBlobContainer($"pilot{apiModel.PilotID}", Azure.Storage.Blobs.Models.PublicAccessType.BlobContainer);
+            BlobClient blobClient = containerClient.GetBlobClient($"script{Guid.NewGuid().ToString()}.html");
+            blobClient.Upload(GenerateStreamFromString(apiModel.ScriptBody));
+            apiModel.ScriptURL = blobClient.Uri.AbsoluteUri;
             return new CreatedID { ID = _aviBL.AddScript(apiModel.ToDLModel()).ID };
+        }
+        private Stream GenerateStreamFromString(string str)
+        {
+            var stream = new MemoryStream();
+            var writer = new StreamWriter(stream);
+            writer.Write(str);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
         }
     }
 }

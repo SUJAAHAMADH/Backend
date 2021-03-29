@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs;
 
 namespace AviREST
 {
@@ -37,7 +38,11 @@ namespace AviREST
             });
             services.AddDbContext<AviDBContext>(options => options.UseNpgsql(Configuration.GetConnectionString("AviDL")));
             services.AddScoped<IAviRepo, AviRepoDB>();
+
             services.AddScoped<IAviBL, AviatorBL>();
+
+            services.AddScoped<BlobServiceClient>(sp => new BlobServiceClient(Configuration.GetConnectionString("BlobStorage")));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

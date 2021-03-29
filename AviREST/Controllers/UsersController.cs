@@ -28,7 +28,7 @@ namespace AviREST.Controllers
         {
             var user = await _aviBL.GetUserByEmail(userEmail);
             if (user == null) return NotFound();
-            return Ok(user);
+            return Ok(user); 
         }
 
         // GET: api/<ValuesController>
