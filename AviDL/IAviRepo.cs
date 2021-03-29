@@ -25,7 +25,8 @@ namespace AviDL
         File DeleteFile(File selectedFile);
         List<Pilot> GetPilots();
         Task<User> GetUserByEmail(string userEmail);
-
+        Task<User> GetUserById(int Id);
         Task<User> AddUserAsync(User newUser);
+        Task<Contributor> GetContributorById(int userId, int pilotId);
     }
 }

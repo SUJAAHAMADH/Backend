@@ -24,14 +24,24 @@ namespace AviDL
                 .Where(u => u.Email == userEmail)
                 .FirstOrDefaultAsync();
         }
-
+        public async Task<User> GetUserById(int Id)
+        {
+            return await _context.Users
+                .Where(u => u.ID == Id)
+                .FirstOrDefaultAsync();
+        }
         public async Task<User> AddUserAsync(User newUser)
         {
             await _context.Users.AddAsync(newUser);
             await _context.SaveChangesAsync();
             return newUser;
         }
-
+        public async Task<Contributor> GetContributorById(int userId, int pilotId)
+        {
+            return await _context.Contributors
+                 .Where(u => u.UserID == userId && u.PilotID == pilotId)
+                 .FirstOrDefaultAsync();
+        }
         public Contributor AddContributor(Contributor newContributor)
         {
             _context.Contributors.Add(newContributor);

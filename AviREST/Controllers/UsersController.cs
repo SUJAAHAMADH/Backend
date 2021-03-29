@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AviBL;
+using AviModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,7 +20,7 @@ namespace AviREST.Controllers
         {
             _aviBL = aviBL;
         }
-        //test
+        
         // GET: api/<UsersController>/
         [HttpGet]
         [Route("/api/User/email/{userEmail}")]
@@ -29,6 +30,32 @@ namespace AviREST.Controllers
             var user = await _aviBL.GetUserByEmail(userEmail);
             if (user == null) return NotFound();
             return Ok(user); 
+        }
+
+        [HttpPost]
+        [Route("/api/User/{userId}/{pilotId}")]
+        [Produces("application/json")]
+        public async Task<IActionResult> EditUser(int userId, int pilotId)
+        {
+            var user = await _aviBL.GetUserById(userId);
+            var pilot = _aviBL.GetPilotByID(pilotId);
+            Contributor contributer = null;
+            if (user != null && pilot != null)
+            {
+                var result = _aviBL.GetContributorById(userId, pilotId);
+                if (result == null)
+                {
+                    contributer = new Contributor();
+                    contributer.UserID = userId;
+                    contributer.PilotID = pilotId;
+                    _aviBL.AddContributor(contributer);
+                }
+            }
+            else
+            {
+                return NotFound();
+            }
+            return Ok(contributer);
         }
 
         // GET: api/<ValuesController>

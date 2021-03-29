@@ -32,7 +32,14 @@ namespace AviBL
             }
 
         }
-
+        public async Task<User> GetUserById(int userId)
+        {
+            return await _repo.GetUserById(userId);
+        }
+        public async Task<Contributor> GetContributorById(int userId, int pilotId)
+        {
+            return await _repo.GetContributorById(userId, pilotId);
+        }
         public Contributor AddContributor(Contributor newContributor)
         {
             return _repo.AddContributor(newContributor);
