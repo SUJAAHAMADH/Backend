@@ -74,8 +74,15 @@ namespace AviREST.Controllers
 
         // POST api/<ValuesController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Route("/api/User")]
+        public async Task<IActionResult> Post([FromBody] User user)
         {
+            var result = await _aviBL.AddUser(user);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
         }
 
         // PUT api/<ValuesController>/5

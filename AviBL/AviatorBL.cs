@@ -30,7 +30,16 @@ namespace AviBL
             {
                 return user2Return;
             }
-
+        }
+        public async Task<User> AddUser(User userdetail)
+        {
+            User user = new User();
+            user.FirstName = userdetail.FirstName;
+            user.LastName = userdetail.LastName;
+            user.PhoneNumb = userdetail.PhoneNumb;
+            user.UserName = userdetail.UserName;
+            user.Email = userdetail.Email;
+            return await _repo.AddUserAsync(user);
         }
         public async Task<User> GetUserById(int userId)
         {

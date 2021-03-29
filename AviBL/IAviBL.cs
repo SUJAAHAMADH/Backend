@@ -27,5 +27,6 @@ namespace AviBL
         Task<User> GetUserByEmail(string userEmail);
         Task<User> GetUserById(int Id);
         Task<Contributor> GetContributorById(int userId, int pilotId);
+        Task<User> AddUser(User userdetail);
     }
 }
